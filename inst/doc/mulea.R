@@ -5,15 +5,10 @@ knitr::opts_chunk$set(
     message = TRUE,
     error = FALSE)
 
-## ----'install', eval=FALSE, message=FALSE, warning=FALSE----------------------
-#  # Installing the BiocManager package if needed
-#  if (!require("BiocManager", quietly = TRUE))
-#      install.packages("BiocManager")
-#  
-#  # Installing the fgsea package from Bioconductor
-#  BiocManager::install("fgsea")
-
 ## ----'install2', eval=FALSE, message=FALSE, warning=FALSE---------------------
+#  install.packages("mulea")
+
+## ----'install3', eval=FALSE, message=FALSE, warning=FALSE---------------------
 #  # Installing the devtools package if needed
 #  if (!require("devtools", quietly = TRUE))
 #      install.packages("devtools")
