@@ -5,6 +5,13 @@ knitr::opts_chunk$set(
     message = TRUE,
     error = FALSE)
 
+## ----'install1', eval=FALSE, message=FALSE, warning=FALSE---------------------
+#  # Installing the BiocManager package if needed
+#  if (!require("BiocManager", quietly = TRUE))
+#      install.packages("BiocManager")
+#  # Installing the fgsea package with the BiocManager
+#  BiocManager::install("fgsea")
+
 ## ----'install2', eval=FALSE, message=FALSE, warning=FALSE---------------------
 #  install.packages("mulea")
 
@@ -110,7 +117,9 @@ ora_model <- ora(gmt = tf_ontology_filtered,
                  # Number of permutations
                  number_of_permutations = 10000,
                  # Number of processor threads to use
-                 nthreads = 2) 
+                 nthreads = 2, 
+                 # Setting a random seed for reproducibility
+                 random_seed = 1) 
 
 # Running the ORA
 ora_results <- run_test(ora_model)
@@ -178,6 +187,69 @@ plot_heatmap(reshaped_results = ora_reshaped_results,
              ontology_id_colname = "ontology_id",
              # Column that indicates the significance values
              p_value_type_colname = "eFDR")
+
+## ----'ora_bh_bonferroni'------------------------------------------------------
+# Creating the ORA model using the Benjamini-Hochberg p-value correction method
+BH_ora_model <- ora(gmt = tf_ontology_filtered, 
+                 # Test set variable
+                 element_names = target_set, 
+                 # Background set variable
+                 background_element_names = background_set, 
+                 # p-value adjustment method
+                 p_value_adjustment_method = "BH",
+                 # Number of processor threads to use
+                 nthreads = 2) 
+
+# Running the ORA
+BH_results <- run_test(BH_ora_model)
+
+# Creating the ORA model using the Bonferroni p-value correction method
+Bonferroni_ora_model <- ora(gmt = tf_ontology_filtered, 
+                            # Test set variable
+                            element_names = target_set, 
+                            # Background set variable
+                            background_element_names = background_set, 
+                            # p-value adjustment method
+                            p_value_adjustment_method = "bonferroni",
+                            # Number of processor threads to use
+                            nthreads = 2) 
+
+# Running the ORA
+Bonferroni_results <- run_test(Bonferroni_ora_model)
+
+## ----'compare_p.adj'----------------------------------------------------------
+# Merging the Benjamini-Hochberg and eFDR results
+merged_results <- BH_results %>% 
+  # Renaming the column
+  rename(BH_adjusted_p_value = adjusted_p_value) %>% 
+  # Selecting the necessary columns
+  select(ontology_id, BH_adjusted_p_value) %>%
+  # Joining with the eFDR results
+  left_join(ora_results, ., by = "ontology_id") %>% 
+  # Converting the data.frame to a tibble
+  tibble()
+
+# Merging the Bonferroni results with the merged results
+merged_results <- Bonferroni_results %>% 
+  # Renaming the column
+  rename(Bonferroni_adjusted_p_value = adjusted_p_value) %>% 
+  # Selecting the necessary columns
+  select(ontology_id, Bonferroni_adjusted_p_value) %>%
+  # Joining with the eFDR results
+  left_join(merged_results, ., by = "ontology_id") %>% 
+  # Arranging by the p-value
+  arrange(p_value)
+
+# filter the p-value < 0.05 results
+merged_results_filtered <- merged_results %>% 
+  filter(p_value < 0.05) %>% 
+  # remove the unnecessary columns
+  select(-ontology_id, -nr_common_with_tested_elements, 
+         -nr_common_with_background_elements)
+
+## ----'print_compare_p.adj', echo=FALSE----------------------------------------
+merged_results_filtered %>% 
+  knitr::kable()
 
 ## ----'reading_ordered'--------------------------------------------------------
 # Reading the tsv containing the ordered set
@@ -280,7 +352,7 @@ target_set <- geo2r_result_tab %>%
   filter(adj.P.Val < 0.05 & logFC > 1) %>% 
   # Selecting the Gene.symbol column
   select(Gene.symbol) %>% 
-  # converting the tibble to a vector
+  # Converting the tibble to a vector
   pull() %>% 
   # Removing duplicates
   unique()
@@ -297,7 +369,7 @@ target_set %>%
 background_set <- geo2r_result_tab %>% 
   # Selecting the Gene.symbol column
   select(Gene.symbol) %>% 
-  # Convertin the tibble to a vector
+  # Converting the tibble to a vector
   pull() %>% 
   # Removing duplicates
   unique()
