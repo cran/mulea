@@ -1,9 +1,8 @@
 Package: mulea
 Type: Package
-Title: Enrichment Analysis using Multiple Ontologies and False
+Title: Enrichment Analysis Using Multiple Ontologies and False
         Discovery Rate
-Version: 1.1.0
-Date: 2024-09-24
+Version: 1.1.1
 Authors@R: c(
     person("Cezary", "Turek", role =  "aut",
         comment = c(ORCID = "0000-0002-1445-5378")),
@@ -70,7 +69,7 @@ RoxygenNote: 7.3.2
 Config/testthat/edition: 3
 Encoding: UTF-8
 NeedsCompilation: yes
-Packaged: 2024-09-24 06:59:27 UTC; tamas
+Packaged: 2024-11-19 08:47:51 UTC; tamas
 Author: Cezary Turek [aut] (<https://orcid.org/0000-0002-1445-5378>),
   Marton Olbei [aut] (<https://orcid.org/0000-0002-4903-6237>),
   Tamas Stirling [aut, cre] (<https://orcid.org/0000-0002-8964-6443>),
@@ -83,4 +82,4 @@ Author: Cezary Turek [aut] (<https://orcid.org/0000-0002-1445-5378>),
   Eszter Ari [aut, cph] (<https://orcid.org/0000-0001-7774-1067>)
 Maintainer: Tamas Stirling <stirling.tamas@gmail.com>
 Repository: CRAN
-Date/Publication: 2024-09-24 07:40:02 UTC
+Date/Publication: 2024-11-19 10:20:11 UTC

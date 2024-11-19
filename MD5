@@ -1,6 +1,6 @@
-8745a68c4de42f02504994f52cca8078 *DESCRIPTION
+fab21a61f512aeefa10e06de64ac825f *DESCRIPTION
 702dc4161baa1a272a72b262baa7a1d5 *NAMESPACE
-073d2ece27493219232df9175d72bfc2 *NEWS.md
+74735026df73bf751402dd7a7bec4420 *NEWS.md
 b323e2d2cc586acc1553b294a4718f7a *R/GenericFunctions.R
 3ab98a96f15026f21442395ae8dcff9c *R/HypergeometricTest.R
 12cbfc7311018f7e86166c0f3c08438c *R/Methods.R
@@ -13,11 +13,11 @@ a14415b7c671caae1200b85fab87e73e *R/SetBasedEnrichmentTest.R
 e4f579a466076e80d2ff75a454a23d6b *R/Utils.R
 b7218913ac295e722389b9cea318b9ba *R/Zzz.R
 389f5832885321178fd661b3cbac009d *R/set-based-enrichment-test.r
-0da549e04048aca78e948047f1e907a5 *build/vignette.rds
-93a138144877ad9c21adff21738d2995 *inst/CITATION
-e269faf6886dc3a3f0511f2671b24cc2 *inst/doc/mulea.R
-370a416427a5349a83568a9abf906111 *inst/doc/mulea.Rmd
-3a7da37439d00489ca4dda8fa1aa2337 *inst/doc/mulea.html
+6cbe85c2c6124d4efe1ada1c92bf5f48 *build/vignette.rds
+8f3102304296e9b3c69d35f9f9bab501 *inst/CITATION
+8fbe9aa9fb40d1a95743b3248c9e1715 *inst/doc/mulea.R
+c6c86dd1d3a3628ba93247099f059f9b *inst/doc/mulea.Rmd
+6f97ed3ab531c0f0f4f6a72d530a715f *inst/doc/mulea.html
 c7d2dd7fee1514fa1451e781afd3f603 *inst/extdata/GSE55662.table_wt_non_vs_cipro.tsv
 46f27c4f071cd43755bc353da39e5e47 *inst/extdata/Transcription_factor_RegulonDB_Escherichia_coli_GeneSymbol.gmt
 15b9861eab5afa610cb99599b4b15a4f *inst/extdata/background_set.txt
@@ -50,4 +50,4 @@ a9e85a45bab317e762b5d2d0699a0967 *tests/testthat/testHypergeometricTest.R
 7491a25de4993541629b6e95159f8c14 *vignettes/Regulon.png
 f7993961c992cc0a0f0aef1bb9eaf40d *vignettes/Venn.png
 a848f76948b9b3eba61e15955e735f29 *vignettes/geo_main.gif
-370a416427a5349a83568a9abf906111 *vignettes/mulea.Rmd
+c6c86dd1d3a3628ba93247099f059f9b *vignettes/mulea.Rmd

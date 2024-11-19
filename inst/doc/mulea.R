@@ -6,78 +6,78 @@ knitr::opts_chunk$set(
     error = FALSE)
 
 ## ----'install1', eval=FALSE, message=FALSE, warning=FALSE---------------------
-#  # Installing the BiocManager package if needed
-#  if (!require("BiocManager", quietly = TRUE))
-#      install.packages("BiocManager")
-#  # Installing the fgsea package with the BiocManager
-#  BiocManager::install("fgsea")
+# # Installing the BiocManager package if needed
+# if (!require("BiocManager", quietly = TRUE))
+#     install.packages("BiocManager")
+# # Installing the fgsea package with the BiocManager
+# BiocManager::install("fgsea")
 
 ## ----'install2', eval=FALSE, message=FALSE, warning=FALSE---------------------
-#  install.packages("mulea")
+# install.packages("mulea")
 
 ## ----'install3', eval=FALSE, message=FALSE, warning=FALSE---------------------
-#  # Installing the devtools package if needed
-#  if (!require("devtools", quietly = TRUE))
-#      install.packages("devtools")
-#  
-#  # Installing the mulea package from GitHub
-#  devtools::install_github("https://github.com/ELTEbioinformatics/mulea")
+# # Installing the devtools package if needed
+# if (!require("devtools", quietly = TRUE))
+#     install.packages("devtools")
+# 
+# # Installing the mulea package from GitHub
+# devtools::install_github("https://github.com/ELTEbioinformatics/mulea")
 
 ## ----'calling1', eval=FALSE---------------------------------------------------
-#  library(mulea)
-#  library(tidyverse)
+# library(mulea)
+# library(tidyverse)
 
 ## ----'calling2', echo=FALSE---------------------------------------------------
 suppressMessages(library(mulea))
 suppressMessages(library(tidyverse))
 
 ## ----'read_GMT1', eval=FALSE--------------------------------------------------
-#  # Reading the mulea GMT file locally
-#  tf_ontology <- read_gmt("Transcription_factor_RegulonDB_Escherichia_coli_GeneSymbol.gmt")
+# # Reading the mulea GMT file locally
+# tf_ontology <- read_gmt("Transcription_factor_RegulonDB_Escherichia_coli_GeneSymbol.gmt")
 
 ## ----'read_GMT2'--------------------------------------------------------------
 # Reading the GMT file from the GitHub repository
 tf_ontology <- read_gmt("https://raw.githubusercontent.com/ELTEbioinformatics/GMT_files_for_mulea/main/GMT_files/Escherichia_coli_83333/Transcription_factor_RegulonDB_Escherichia_coli_GeneSymbol.gmt")
 
 ## ----'read_GMT3', eval=FALSE--------------------------------------------------
-#  # Reading the Enrichr GMT file locally
-#  tf_enrichr_ontology <- read_gmt("TRRUST_Transcription_Factors_2019.txt")
-#  
-#  # The ontology_name is empty, therefore we need to fill it with the ontology_id
-#  tf_enrichr_ontology$ontology_name <- tf_enrichr_ontology$ontology_id
-#  
+# # Reading the Enrichr GMT file locally
+# tf_enrichr_ontology <- read_gmt("TRRUST_Transcription_Factors_2019.txt")
+# 
+# # The ontology_name is empty, therefore we need to fill it with the ontology_id
+# tf_enrichr_ontology$ontology_name <- tf_enrichr_ontology$ontology_id
+# 
 
 ## ----'read_GMT4', eval=FALSE--------------------------------------------------
-#  # Reading the MsigDB GMT file locally
-#  tf_msigdb_ontology <- read_gmt("c3.tft.v2023.2.Hs.symbols.gmt")
+# # Reading the MsigDB GMT file locally
+# tf_msigdb_ontology <- read_gmt("c3.tft.v2023.2.Hs.symbols.gmt")
 
 ## ----'read_muleaData', eval=FALSE---------------------------------------------
-#  # Installing the ExperimentHub package from Bioconductor
-#  BiocManager::install("ExperimentHub")
-#  
-#  # Calling the ExperimentHub library.
-#  library(ExperimentHub)
-#  
-#  # Downloading the metadata from ExperimentHub.
-#  eh <- ExperimentHub()
-#  
-#  # Creating the muleaData variable.
-#  muleaData <- query(eh, "muleaData")
-#  
-#  # Looking for the ExperimentalHub ID of the ontology.
-#  EHID <- mcols(muleaData) %>%
-#    as.data.frame() %>%
-#    dplyr::filter(title == "Transcription_factor_RegulonDB_Escherichia_coli_GeneSymbol.rds") %>%
-#    rownames()
-#  
-#  # Reading the ontology from the muleaData package.
-#  tf_ontology <- muleaData[[EHID]]
-#  
-#  # Change the header
-#  tf_ontology <- tf_ontology %>%
-#    rename(ontology_id = "ontologyId",
-#           ontology_name = "ontologyName",
-#           list_of_values = "listOfValues")
+# # Installing the ExperimentHub package from Bioconductor
+# BiocManager::install("ExperimentHub")
+# 
+# # Calling the ExperimentHub library.
+# library(ExperimentHub)
+# 
+# # Downloading the metadata from ExperimentHub.
+# eh <- ExperimentHub()
+# 
+# # Creating the muleaData variable.
+# muleaData <- query(eh, "muleaData")
+# 
+# # Looking for the ExperimentalHub ID of the ontology.
+# EHID <- mcols(muleaData) %>%
+#   as.data.frame() %>%
+#   dplyr::filter(title == "Transcription_factor_RegulonDB_Escherichia_coli_GeneSymbol.rds") %>%
+#   rownames()
+# 
+# # Reading the ontology from the muleaData package.
+# tf_ontology <- muleaData[[EHID]]
+# 
+# # Change the header
+# tf_ontology <- tf_ontology %>%
+#   rename(ontology_id = "ontologyId",
+#          ontology_name = "ontologyName",
+#          list_of_values = "listOfValues")
 
 ## ----'exclude_ontology'-------------------------------------------------------
 # Filtering the ontology
@@ -86,17 +86,17 @@ tf_ontology_filtered <- filter_ontology(gmt = tf_ontology,
                                         max_nr_of_elements = 400)
 
 ## ----'save_gmt', eval=FALSE---------------------------------------------------
-#  # Saving the ontology to GMT file
-#  write_gmt(gmt = tf_ontology_filtered,
-#            file = "Filtered.gmt")
+# # Saving the ontology to GMT file
+# write_gmt(gmt = tf_ontology_filtered,
+#           file = "Filtered.gmt")
 
 ## ----'list_to_gmt_example', eval=FALSE----------------------------------------
-#  # Creating a list of gene sets
-#  ontology_list <- list(gene_set1 = c("gene1", "gene2", "gene3"),
-#                        gene_set2 = c("gene4", "gene5", "gene6"))
-#  
-#  # Converting the list to a ontology (GMT) object
-#  new_ontology_df <- list_to_gmt(ontology_list)
+# # Creating a list of gene sets
+# ontology_list <- list(gene_set1 = c("gene1", "gene2", "gene3"),
+#                       gene_set2 = c("gene4", "gene5", "gene6"))
+# 
+# # Converting the list to a ontology (GMT) object
+# new_ontology_df <- list_to_gmt(ontology_list)
 
 ## ----'reading_target_bg'------------------------------------------------------
 # Taget set
@@ -132,11 +132,11 @@ ora_results %>%
   nrow()
 
 ## ----'print_ora', eval=FALSE--------------------------------------------------
-#  ora_results %>%
-#    # Arrange the rows by the eFDR values
-#    arrange(eFDR) %>%
-#    # Rows where the eFDR < 0.05
-#    filter(eFDR < 0.05)
+# ora_results %>%
+#   # Arrange the rows by the eFDR values
+#   arrange(eFDR) %>%
+#   # Rows where the eFDR < 0.05
+#   filter(eFDR < 0.05)
 
 ## ----'print_ora2', echo=FALSE-------------------------------------------------
 ora_results %>%
@@ -278,11 +278,11 @@ gsea_results %>%
   nrow()
 
 ## ----'print_gsea', eval=FALSE-------------------------------------------------
-#  gsea_results %>%
-#    # arrange the rows by the adjusted_p_value values
-#    arrange(adjusted_p_value) %>%
-#    # rows where the adjusted_p_value < 0.05
-#    filter(adjusted_p_value < 0.05)
+# gsea_results %>%
+#   # arrange the rows by the adjusted_p_value values
+#   arrange(adjusted_p_value) %>%
+#   # rows where the adjusted_p_value < 0.05
+#   filter(adjusted_p_value < 0.05)
 
 ## ----'print_gsea2', echo=FALSE------------------------------------------------
 gsea_results %>%
@@ -314,9 +314,9 @@ plot_graph(reshaped_results = gsea_reshaped_results,
 geo2r_result_tab <- read_tsv("https://raw.githubusercontent.com/ELTEbioinformatics/mulea/master/inst/extdata/GSE55662.table_wt_non_vs_cipro.tsv")
 
 ## ----'print_geo1', eval=FALSE-------------------------------------------------
-#  # Printing the first few rows of the data frame
-#  geo2r_result_tab %>%
-#    head(3)
+# # Printing the first few rows of the data frame
+# geo2r_result_tab %>%
+#   head(3)
 
 ## ----'print_geo2', echo=FALSE-------------------------------------------------
 # Printing the first few rows of the data frame
@@ -336,9 +336,9 @@ geo2r_result_tab <- geo2r_result_tab %>%
   arrange(desc(logFC))
 
 ## ----'print_geo_formatted1', eval=FALSE---------------------------------------
-#  # Printing the first few rows of the formatted data frame
-#  geo2r_result_tab %>%
-#    head(3)
+# # Printing the first few rows of the formatted data frame
+# geo2r_result_tab %>%
+#   head(3)
 
 ## ----'print_geo_formatted2', echo=FALSE---------------------------------------
 # Printing the first few rows of the formatted data frame
@@ -379,13 +379,13 @@ background_set %>%
   length()
 
 ## ----'save_target_bg', eval=FALSE---------------------------------------------
-#  # Save taget set to text file
-#  target_set %>%
-#    writeLines("target_set.txt")
-#  
-#  # Save background set to text file
-#  background_set %>%
-#    writeLines("inst/extdata/background_set.txt")
+# # Save taget set to text file
+# target_set %>%
+#   writeLines("target_set.txt")
+# 
+# # Save background set to text file
+# background_set %>%
+#   writeLines("inst/extdata/background_set.txt")
 
 ## ----'gsea_input'-------------------------------------------------------------
 # If there are duplicated Gene.symbols keep the first one only
@@ -406,9 +406,9 @@ ordered_set %>%
   nrow()
 
 ## ----'save_ordered', eval=FALSE-----------------------------------------------
-#  # Save ordered set to text file
-#  ordered_set %>%
-#    write_tsv("ordered_set.tsv")
+# # Save ordered set to text file
+# ordered_set %>%
+#   write_tsv("ordered_set.tsv")
 
 ## ----'session_info'-----------------------------------------------------------
 sessionInfo()
